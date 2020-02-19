@@ -405,6 +405,9 @@ message AddApplicationRequest {
   // Execution timeout: How long this application can be in a running state
   // 0 or negative value means never expire.
   int64 executionTimeoutMilliSeconds = 6;
+  // minimal number of slots required for this job to run (gang scheduling),
+  // if the job cannot get these many slots for its tasks, all of tasks will be pending.
+  int32 minTaskSlots = 7;
 }
 
 message RemoveApplicationRequest {
