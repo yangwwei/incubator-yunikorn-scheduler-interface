@@ -212,6 +212,9 @@ message UpdateRequest {
 
   // RM can also remove applications, all allocation/allocation requests associated with the application will be removed
   repeated RemoveApplicationRequest removeApplications = 9;
+
+  // RM can make updates to existing applications
+  repeated UpdateApplicationRequest updateApplications = 10;
 }
 
 message UpdateResponse {
@@ -412,6 +415,30 @@ message RemoveApplicationRequest {
   string applicationID = 1;
   // The partition the application belongs to
   string partitionName = 2;
+}
+
+message ClaimApplicationState {
+  ApplicationStates applicationState = 1;
+  string message = 2;
+}
+
+enum ApplicationStates {
+  NEW = 0;
+  RECOVERING = 1;
+  SUBMITTED = 2;
+  ACCEPTED = 3;
+  SCHEDUABLE = 4
+  RUNNING = 5;
+  COMPLETED = 6 // rejected, killed, failed, succeed
+}
+
+message UpdateApplicationRequest {
+  // The ID of the application to remove
+  string applicationID = 1;
+  // The partition the application belongs to
+  string partitionName = 2;
+  // Claim app in which state
+  ClaimApplicationState state = 3;
 }
 ```
 
