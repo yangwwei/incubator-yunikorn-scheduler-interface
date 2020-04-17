@@ -427,9 +427,9 @@ enum ApplicationStates {
   RECOVERING = 1;
   SUBMITTED = 2;
   ACCEPTED = 3;
-  SCHEDUABLE = 4
+  SCHEDULABLE = 4;
   RUNNING = 5;
-  COMPLETED = 6 // rejected, killed, failed, succeed
+  COMPLETED = 6; // rejected, killed, failed, succeed
 }
 
 message UpdateApplicationRequest {
