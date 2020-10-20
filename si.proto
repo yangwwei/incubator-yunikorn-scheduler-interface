@@ -223,6 +223,16 @@ message AllocationAsk {
   // Placement constraint defines how this allocation should be placed in the cluster.
   // if not set, no placement constraint will be applied.
   PlacementConstraint placementConstraint = 9;
+  // preemption
+  // if set, this is a preemption ask, it preempts an reservation to get space for allocation
+  // this always has a specified target
+  repeated PreemptionVictim victims = 10;
+}
+
+message PreemptionVictim {
+  string allocationKey = 1;
+  string allocationUUID = 2;
+  string hostName = 3;
 }
 message AddApplicationRequest {
   // The ID of the application, must be unique
@@ -248,6 +258,13 @@ message RemoveApplicationRequest {
   string applicationID = 1;
   // The partition the application belongs to
   string partitionName = 2;
+}
+
+// a task group is considered to be scheduling as a group, i.e gang scheduling
+message TaskGroup {
+  string name = 1;
+  int32 minMember = 2;
+  map<string, string> minResource = 3;
 }
 message UserGroupInformation {
   // the user name
@@ -422,6 +439,8 @@ message Allocation {
   string applicationID = 9;
   // Partition of the allocation
   string partitionName = 10;
+  // preemption
+  PreemptionVictim victim = 11;
 }
 message RejectedAllocationAsk {
   string allocationKey = 1;
